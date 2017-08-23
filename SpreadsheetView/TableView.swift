@@ -9,7 +9,7 @@
 import UIKit
 
 // IMPORTANT:  set tags the same as what is in the storyboard
-let CELL_ID = "Cell"      // TableViewCell
+let TABLEVIEW_CELL_ID = "TableViewCell"      // TableViewCell reuse identifier
 
 class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     // IMPORTANT:  need connection back to spreadSheetView in Storyboard
@@ -21,7 +21,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var isScrolling = false             // semaphore to prevent infinite scroll loops
     
     override func awakeFromNib() {
-         super.awakeFromNib()
+        super.awakeFromNib()
         
         // so we don't have to bother setting them in the storyboard
         self.dataSource = self
@@ -47,6 +47,8 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     func overrideDefaults() {
         self.rowBackgroundColor = self.spreadsheetView.rowBackgroundColor
         self.rowAlternateColor = self.spreadsheetView.rowAlternateColor
+        
+        self.backgroundColor = self.rowBackgroundColor
     }
     
     // set the isSelected property for the passed column in all visible rows
@@ -94,8 +96,6 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     // scroll to the passed row
     func scrollToRow(_ row: Int) {
-        //print("TableView.scrollToRow(\(row))")
-        
         let indexPath = IndexPath(item: row, section: 0)
         
         self.scrollToRow(at: indexPath, at: .top, animated: false)
@@ -110,11 +110,6 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
             
             tableViewCell.dataRow.scrollToCell(col)
         }
-    }
-    
-    func scrollToCell(_ row: Int, _ col: Int) {
-        self.scrollToRow(row)
-        self.scrollToCol(col)
     }
     
     // MARK
@@ -134,7 +129,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     // return another reusable TableView cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TABLEVIEW_CELL_ID, for: indexPath) as! TableViewCell
         
         return cell
     }
