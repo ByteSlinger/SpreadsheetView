@@ -32,7 +32,7 @@
 // Horizontally scrolling is handled by the SpreadsheetView syncing the
 // HeadingRow and the visible TableView Rows.
 //
-// NOTE:  the datSource (SpreadsheetViewDataSource) must exist and conform to the protocol for anything to work
+// NOTE:  the dataSource (SpreadsheetViewDataSource) must exist and conform to the protocol for anything to work
 //
 //  Created by ByteSlinger on 2017-08-10.
 //  Copyright © 2017 ByteSlinger. All rights reserved.
