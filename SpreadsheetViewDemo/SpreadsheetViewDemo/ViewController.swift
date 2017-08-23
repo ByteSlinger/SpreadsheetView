@@ -22,10 +22,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         //print("ViewController.viewDidLoad()")
         
-
         // demonstrate how to override whatever was in the Storyboard
         self.spreadsheetView.maxCellWidth = 80.0
         
+        UIApplication.shared.statusBarStyle = .lightContent
+        self.view.backgroundColor = UIColor.black
         self.spreadsheetView.rowBackgroundColor = UIColor.black
         self.spreadsheetView.rowAlternateColor = UIColor.black.withAlphaComponent(0.8)
         self.spreadsheetView.dataLabelHighlightedBackgroundColor = UIColor.blue.withAlphaComponent(0.5)
