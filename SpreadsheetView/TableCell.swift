@@ -99,6 +99,7 @@ class TableCell: UICollectionViewCell {
         
         // set the border around each cell
         if(heading == false && self.spreadsheetView.isCurrentCorner(row, col)) {
+            // special border if it is the currentCorner cell
             self.layer.borderWidth = 0.5
             self.layer.borderColor = UIColor.red.cgColor
         } else {

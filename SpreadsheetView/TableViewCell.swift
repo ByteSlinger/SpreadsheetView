@@ -12,8 +12,6 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var dataRow: DataRow!
     
     override func awakeFromNib() {
-        //print("TableViewCell.awakeFromNib()")
-
         super.awakeFromNib()
         // Initialization code
         

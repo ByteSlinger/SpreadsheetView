@@ -123,8 +123,6 @@ public class SpreadsheetView: UIView {
             newCol = 0
         }
 
-        //print("\(me).scrollToCorner - \(newRow)/\(newCol)")
-
         self.scrollToCell(newRow,newCol)    // forces reset of cornerRow and cornerCol
         
         self.cornerRow = newRow
@@ -141,8 +139,6 @@ public class SpreadsheetView: UIView {
     }
 
     override public func awakeFromNib() {
-        //print("\(me).awakeFromNib()")
-        
         super.awakeFromNib()
         
         // put a thin border around our view

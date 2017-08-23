@@ -18,8 +18,6 @@ class HeadingColumn: UICollectionView, UICollectionViewDelegate, UICollectionVie
     private var isScrolling = false             // semaphore to prevent infinite scroll loops
     
     override func awakeFromNib() {
-        //print("HeadingColumn.awakeFromNib()")
-        
         super.awakeFromNib()
         
         // so we don't have to bother setting them in the storyboard

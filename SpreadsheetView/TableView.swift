@@ -21,8 +21,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var isScrolling = false             // semaphore to prevent infinite scroll loops
     
     override func awakeFromNib() {
-        //print("TableView.awakeFromNib()")
-        super.awakeFromNib()
+         super.awakeFromNib()
         
         // so we don't have to bother setting them in the storyboard
         self.dataSource = self
@@ -104,8 +103,6 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     // scroll all visible rows to the passed column
     func scrollToCol(_ col: Int) {
-        //print("TableView.scrollToCol(\(col))")
-        
         let visible = self.visibleCells
         
         for cell in visible {

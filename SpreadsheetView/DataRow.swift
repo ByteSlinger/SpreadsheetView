@@ -44,7 +44,6 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
         
         if (self.isScrolling == false) {
             self.isScrolling = true             // turn on sempahore to prevent infinite loop
-            //print("DataRow.scrollTo tag = \(self.tag), offset = \(offset.x)/\(offset.y), current = \(self.contentOffset.x),\(self.contentOffset.y)")
             
             if (offset.x != self.contentOffset.x) {
                 self.contentOffset = offset
@@ -61,8 +60,6 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
     
     // scroll the CollectionView to the passed item (column)
     func scrollToCell(_ item: Int) {
-        //print("DataRow.scrollToCell(\(item))")
-
         let indexPath = IndexPath(item: item, section: 0)
         
         self.scrollToItem(at: indexPath, at: .right, animated: false)
