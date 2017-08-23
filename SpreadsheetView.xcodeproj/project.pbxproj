@@ -21,13 +21,13 @@
 		4C4E17181F4D0FA0005BE585 /* SpreadsheetView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SpreadsheetView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4E171B1F4D0FA0005BE585 /* SpreadsheetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpreadsheetView.h; sourceTree = "<group>"; };
 		4C4E171C1F4D0FA0005BE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4CAC36CF1F4D1088007C095A /* DataRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataRow.swift; path = SpreadsheetView/DataRow.swift; sourceTree = "<group>"; };
-		4CAC36D01F4D1088007C095A /* HeadingColumn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeadingColumn.swift; path = SpreadsheetView/HeadingColumn.swift; sourceTree = "<group>"; };
-		4CAC36D11F4D1088007C095A /* HeadingRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeadingRow.swift; path = SpreadsheetView/HeadingRow.swift; sourceTree = "<group>"; };
-		4CAC36D21F4D1088007C095A /* SpreadsheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpreadsheetView.swift; path = SpreadsheetView/SpreadsheetView.swift; sourceTree = "<group>"; };
-		4CAC36D31F4D1088007C095A /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableCell.swift; path = SpreadsheetView/TableCell.swift; sourceTree = "<group>"; };
-		4CAC36D41F4D1088007C095A /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableView.swift; path = SpreadsheetView/TableView.swift; sourceTree = "<group>"; };
-		4CAC36D51F4D1088007C095A /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = SpreadsheetView/TableViewCell.swift; sourceTree = "<group>"; };
+		4CAC36CF1F4D1088007C095A /* DataRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataRow.swift; sourceTree = "<group>"; };
+		4CAC36D01F4D1088007C095A /* HeadingColumn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingColumn.swift; sourceTree = "<group>"; };
+		4CAC36D11F4D1088007C095A /* HeadingRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingRow.swift; sourceTree = "<group>"; };
+		4CAC36D21F4D1088007C095A /* SpreadsheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpreadsheetView.swift; sourceTree = "<group>"; };
+		4CAC36D31F4D1088007C095A /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		4CAC36D41F4D1088007C095A /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		4CAC36D51F4D1088007C095A /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,13 +44,6 @@
 		4C4E170E1F4D0FA0005BE585 = {
 			isa = PBXGroup;
 			children = (
-				4CAC36CF1F4D1088007C095A /* DataRow.swift */,
-				4CAC36D01F4D1088007C095A /* HeadingColumn.swift */,
-				4CAC36D11F4D1088007C095A /* HeadingRow.swift */,
-				4CAC36D21F4D1088007C095A /* SpreadsheetView.swift */,
-				4CAC36D31F4D1088007C095A /* TableCell.swift */,
-				4CAC36D41F4D1088007C095A /* TableView.swift */,
-				4CAC36D51F4D1088007C095A /* TableViewCell.swift */,
 				4C4E171A1F4D0FA0005BE585 /* SpreadsheetView */,
 				4C4E17191F4D0FA0005BE585 /* Products */,
 			);
@@ -67,6 +60,13 @@
 		4C4E171A1F4D0FA0005BE585 /* SpreadsheetView */ = {
 			isa = PBXGroup;
 			children = (
+				4CAC36D51F4D1088007C095A /* TableViewCell.swift */,
+				4CAC36D41F4D1088007C095A /* TableView.swift */,
+				4CAC36D31F4D1088007C095A /* TableCell.swift */,
+				4CAC36D21F4D1088007C095A /* SpreadsheetView.swift */,
+				4CAC36D11F4D1088007C095A /* HeadingRow.swift */,
+				4CAC36D01F4D1088007C095A /* HeadingColumn.swift */,
+				4CAC36CF1F4D1088007C095A /* DataRow.swift */,
 				4C4E171B1F4D0FA0005BE585 /* SpreadsheetView.h */,
 				4C4E171C1F4D0FA0005BE585 /* Info.plist */,
 			);
