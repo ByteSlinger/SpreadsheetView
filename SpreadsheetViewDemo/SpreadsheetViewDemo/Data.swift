@@ -1,6 +1,8 @@
 //
 //  Data.swift
-//  SpreadsheetView
+//  SpreadsheetViewDemo
+//
+//      Sample SpreadsheetViewDataSource code.
 //
 //  Created by ByteSlinger on 2017-08-10.
 //  Copyright © 2017 ByteSlinger. All rights reserved.
@@ -168,8 +170,6 @@ class Data: SpreadsheetViewDataSource {
         if (self.validIndexes(row: row, col: col, msg: "getCell")) {
         
             let cell = self.data[row][col]
-        
-            //print("Data.getCell: row = \(row), col = \(col), value = \(cell?.value ?? "?")")
         
             return cell
         }
