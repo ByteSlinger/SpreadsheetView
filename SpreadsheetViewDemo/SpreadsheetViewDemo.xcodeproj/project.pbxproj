@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		4C4E17301F4D0FCF005BE585 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E172F1F4D0FCF005BE585 /* AppDelegate.swift */; };
 		4C4E17321F4D0FCF005BE585 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E17311F4D0FCF005BE585 /* ViewController.swift */; };
-		4C4E17351F4D0FCF005BE585 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C4E17331F4D0FCF005BE585 /* Main.storyboard */; };
 		4C4E17381F4D0FCF005BE585 /* SpreadsheetViewDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E17361F4D0FCF005BE585 /* SpreadsheetViewDemo.xcdatamodeld */; };
 		4C4E173A1F4D0FCF005BE585 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C4E17391F4D0FCF005BE585 /* Assets.xcassets */; };
 		4C4E173D1F4D0FCF005BE585 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C4E173B1F4D0FCF005BE585 /* LaunchScreen.storyboard */; };
 		4CAC36CE1F4D1060007C095A /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAC36CD1F4D1060007C095A /* Data.swift */; };
 		4CAC36E31F4D10B7007C095A /* SpreadsheetView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC36E21F4D10A1007C095A /* SpreadsheetView.framework */; };
 		4CAC36E41F4D10B7007C095A /* SpreadsheetView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC36E21F4D10A1007C095A /* SpreadsheetView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CBFB5641F4DE7BF00ACD0F5 /* Spreadsheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBFB5621F4DE7BF00ACD0F5 /* Spreadsheet.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +53,13 @@
 		4C4E172C1F4D0FCF005BE585 /* SpreadsheetViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpreadsheetViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4E172F1F4D0FCF005BE585 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C4E17311F4D0FCF005BE585 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4C4E17341F4D0FCF005BE585 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C4E17371F4D0FCF005BE585 /* SpreadsheetViewDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SpreadsheetViewDemo.xcdatamodel; sourceTree = "<group>"; };
 		4C4E17391F4D0FCF005BE585 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C4E173C1F4D0FCF005BE585 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C4E173E1F4D0FCF005BE585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CAC36CD1F4D1060007C095A /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		4CAC36DD1F4D10A1007C095A /* SpreadsheetView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SpreadsheetView.xcodeproj; path = ../SpreadsheetView.xcodeproj; sourceTree = "<group>"; };
+		4CBFB5631F4DE7BF00ACD0F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = SpreadsheetViewDemo/Base.lproj/Spreadsheet.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +97,8 @@
 				4C4E172F1F4D0FCF005BE585 /* AppDelegate.swift */,
 				4C4E17311F4D0FCF005BE585 /* ViewController.swift */,
 				4CAC36CD1F4D1060007C095A /* Data.swift */,
-				4C4E17331F4D0FCF005BE585 /* Main.storyboard */,
 				4C4E17391F4D0FCF005BE585 /* Assets.xcassets */,
+				4CBFB5621F4DE7BF00ACD0F5 /* Spreadsheet.storyboard */,
 				4C4E173B1F4D0FCF005BE585 /* LaunchScreen.storyboard */,
 				4C4E173E1F4D0FCF005BE585 /* Info.plist */,
 				4C4E17361F4D0FCF005BE585 /* SpreadsheetViewDemo.xcdatamodeld */,
@@ -193,8 +193,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C4E173D1F4D0FCF005BE585 /* LaunchScreen.storyboard in Resources */,
+				4CBFB5641F4DE7BF00ACD0F5 /* Spreadsheet.storyboard in Resources */,
 				4C4E173A1F4D0FCF005BE585 /* Assets.xcassets in Resources */,
-				4C4E17351F4D0FCF005BE585 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,20 +223,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4C4E17331F4D0FCF005BE585 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4C4E17341F4D0FCF005BE585 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4C4E173B1F4D0FCF005BE585 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4C4E173C1F4D0FCF005BE585 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		4CBFB5621F4DE7BF00ACD0F5 /* Spreadsheet.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBFB5631F4DE7BF00ACD0F5 /* Base */,
+			);
+			name = Spreadsheet.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
