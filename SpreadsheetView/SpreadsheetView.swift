@@ -127,6 +127,8 @@ public class SpreadsheetView: UIView {
         
         self.cornerRow = newRow
         self.cornerCol = newCol
+        
+        self.tableView.reloadData()
     }
     
     // for TableCell to blink current corner
@@ -152,7 +154,10 @@ public class SpreadsheetView: UIView {
         
         self.tableView.overrideDefaults()
 
+        self.cornerButton.tintColor = self.headingLabelFontColor
         self.cornerButton.backgroundColor = self.headingBackgroundColor
+        self.headingRowView.backgroundColor = self.headingBackgroundColor
+        self.headingColumnView.backgroundColor = self.headingBackgroundColor
     }
     
     // set the dataSource to the passed object, set the first row/col heading vars
@@ -237,6 +242,9 @@ public class SpreadsheetView: UIView {
             if (self.currentOffset.x != offset.x) {
                 //print("\(me).ScrollHorizontal offset = \(offset.x)/\(offset.y), current = \(self.currentOffset.x)/\(self.currentOffset.y)")
                 
+                self.cornerCol = -1
+                self.cornerRow = -1
+                
                 let xOffset = CGPoint(x: offset.x, y: 0)
                 
                 self.currentOffset.x = xOffset.x
@@ -257,6 +265,9 @@ public class SpreadsheetView: UIView {
             
             if (self.currentOffset.y != offset.y) {
                 //print("\(me).ScrollVertical offset = \(offset.x)/\(offset.y), current = \(self.currentOffset.x)/\(self.currentOffset.y)")
+
+                self.cornerCol = -1
+                self.cornerRow = -1
 
                 let yOffset = CGPoint(x: 0, y: offset.y)
                 
