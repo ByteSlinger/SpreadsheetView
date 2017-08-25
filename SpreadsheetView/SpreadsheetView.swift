@@ -109,6 +109,11 @@ public class SpreadsheetView: UIView {
         var newRow = 0
         var newCol = 0
         
+        // sanity check
+        if (self.dataSource == nil || self.numRows() <= 0 || self.numCols() <= 0) {
+            return
+        }
+        
         if (self.cornerRow == 0 && self.cornerCol == 0) {
             // go to top right
             newRow = 0
