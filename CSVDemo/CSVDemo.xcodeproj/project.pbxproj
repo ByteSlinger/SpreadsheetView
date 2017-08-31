@@ -1,0 +1,454 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C19C4321F55DD1200613233 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C19C4311F55DD1200613233 /* AppDelegate.swift */; };
+		4C19C4341F55DD1200613233 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C19C4331F55DD1200613233 /* ViewController.swift */; };
+		4C19C4371F55DD1200613233 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C4351F55DD1200613233 /* Main.storyboard */; };
+		4C19C43A1F55DD1200613233 /* CSVDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C19C4381F55DD1200613233 /* CSVDemo.xcdatamodeld */; };
+		4C19C43C1F55DD1200613233 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C43B1F55DD1200613233 /* Assets.xcassets */; };
+		4C19C43F1F55DD1200613233 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C43D1F55DD1200613233 /* LaunchScreen.storyboard */; };
+		4C19C4511F55DD8600613233 /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C19C4461F55DD8600613233 /* CSVFile.swift */; };
+		4C19C4521F55DD8600613233 /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C19C4471F55DD8600613233 /* CSVViewController.swift */; };
+		4C19C4531F55DD8600613233 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C19C4481F55DD8600613233 /* Extensions.swift */; };
+		4C19C4541F55DD8600613233 /* cities.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C44A1F55DD8600613233 /* cities.csv */; };
+		4C19C4551F55DD8600613233 /* gps.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C44B1F55DD8600613233 /* gps.csv */; };
+		4C19C4561F55DD8600613233 /* mlb_players.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C44C1F55DD8600613233 /* mlb_players.csv */; };
+		4C19C4571F55DD8600613233 /* oscar_age_female.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C44D1F55DD8600613233 /* oscar_age_female.csv */; };
+		4C19C4581F55DD8600613233 /* oscar_age_male.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C44E1F55DD8600613233 /* oscar_age_male.csv */; };
+		4C19C4591F55DD8600613233 /* people.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C44F1F55DD8600613233 /* people.csv */; };
+		4C19C45A1F55DD8600613233 /* stationary.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C19C4501F55DD8600613233 /* stationary.csv */; };
+		4C19C4611F55DE1E00613233 /* SpreadsheetView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C19C4601F55DDB900613233 /* SpreadsheetView.framework */; };
+		4C19C4621F55DE1E00613233 /* SpreadsheetView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C19C4601F55DDB900613233 /* SpreadsheetView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C278E331F578C3C005FC793 /* sample.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4C278E321F578C3C005FC793 /* sample.csv */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4C19C45F1F55DDB900613233 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C19C45B1F55DDB900613233 /* SpreadsheetView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4C4E17181F4D0FA0005BE585;
+			remoteInfo = SpreadsheetView;
+		};
+		4C19C4631F55DE1E00613233 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C19C45B1F55DDB900613233 /* SpreadsheetView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C4E17171F4D0FA0005BE585;
+			remoteInfo = SpreadsheetView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4C19C4651F55DE1E00613233 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4C19C4621F55DE1E00613233 /* SpreadsheetView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4C19C42E1F55DD1200613233 /* CSVDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSVDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C19C4311F55DD1200613233 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4C19C4331F55DD1200613233 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4C19C4361F55DD1200613233 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4C19C4391F55DD1200613233 /* CSVDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CSVDemo.xcdatamodel; sourceTree = "<group>"; };
+		4C19C43B1F55DD1200613233 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4C19C43E1F55DD1200613233 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4C19C4401F55DD1200613233 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C19C4461F55DD8600613233 /* CSVFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVFile.swift; sourceTree = "<group>"; };
+		4C19C4471F55DD8600613233 /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
+		4C19C4481F55DD8600613233 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		4C19C44A1F55DD8600613233 /* cities.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cities.csv; sourceTree = "<group>"; };
+		4C19C44B1F55DD8600613233 /* gps.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gps.csv; sourceTree = "<group>"; };
+		4C19C44C1F55DD8600613233 /* mlb_players.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mlb_players.csv; sourceTree = "<group>"; };
+		4C19C44D1F55DD8600613233 /* oscar_age_female.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = oscar_age_female.csv; sourceTree = "<group>"; };
+		4C19C44E1F55DD8600613233 /* oscar_age_male.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = oscar_age_male.csv; sourceTree = "<group>"; };
+		4C19C44F1F55DD8600613233 /* people.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = people.csv; sourceTree = "<group>"; };
+		4C19C4501F55DD8600613233 /* stationary.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stationary.csv; sourceTree = "<group>"; };
+		4C19C45B1F55DDB900613233 /* SpreadsheetView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SpreadsheetView.xcodeproj; path = ../SpreadsheetView.xcodeproj; sourceTree = "<group>"; };
+		4C278E321F578C3C005FC793 /* sample.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.csv; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4C19C42B1F55DD1200613233 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C19C4611F55DE1E00613233 /* SpreadsheetView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4C19C4251F55DD1200613233 = {
+			isa = PBXGroup;
+			children = (
+				4C19C45B1F55DDB900613233 /* SpreadsheetView.xcodeproj */,
+				4C19C4301F55DD1200613233 /* CSVDemo */,
+				4C19C4491F55DD8600613233 /* Files */,
+				4C19C42F1F55DD1200613233 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4C19C42F1F55DD1200613233 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C19C42E1F55DD1200613233 /* CSVDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C19C4301F55DD1200613233 /* CSVDemo */ = {
+			isa = PBXGroup;
+			children = (
+				4C19C4311F55DD1200613233 /* AppDelegate.swift */,
+				4C19C4331F55DD1200613233 /* ViewController.swift */,
+				4C19C4471F55DD8600613233 /* CSVViewController.swift */,
+				4C19C4461F55DD8600613233 /* CSVFile.swift */,
+				4C19C4481F55DD8600613233 /* Extensions.swift */,
+				4C19C4351F55DD1200613233 /* Main.storyboard */,
+				4C19C43B1F55DD1200613233 /* Assets.xcassets */,
+				4C19C43D1F55DD1200613233 /* LaunchScreen.storyboard */,
+				4C19C4401F55DD1200613233 /* Info.plist */,
+				4C19C4381F55DD1200613233 /* CSVDemo.xcdatamodeld */,
+			);
+			path = CSVDemo;
+			sourceTree = "<group>";
+		};
+		4C19C4491F55DD8600613233 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C19C44A1F55DD8600613233 /* cities.csv */,
+				4C19C44B1F55DD8600613233 /* gps.csv */,
+				4C19C44C1F55DD8600613233 /* mlb_players.csv */,
+				4C19C44D1F55DD8600613233 /* oscar_age_female.csv */,
+				4C19C44E1F55DD8600613233 /* oscar_age_male.csv */,
+				4C19C44F1F55DD8600613233 /* people.csv */,
+				4C19C4501F55DD8600613233 /* stationary.csv */,
+				4C278E321F578C3C005FC793 /* sample.csv */,
+			);
+			name = Files;
+			path = CSVDemo/Files;
+			sourceTree = "<group>";
+		};
+		4C19C45C1F55DDB900613233 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C19C4601F55DDB900613233 /* SpreadsheetView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4C19C42D1F55DD1200613233 /* CSVDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C19C4431F55DD1200613233 /* Build configuration list for PBXNativeTarget "CSVDemo" */;
+			buildPhases = (
+				4C19C42A1F55DD1200613233 /* Sources */,
+				4C19C42B1F55DD1200613233 /* Frameworks */,
+				4C19C42C1F55DD1200613233 /* Resources */,
+				4C19C4651F55DE1E00613233 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4C19C4641F55DE1E00613233 /* PBXTargetDependency */,
+			);
+			name = CSVDemo;
+			productName = CSVDemo;
+			productReference = 4C19C42E1F55DD1200613233 /* CSVDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4C19C4261F55DD1200613233 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = ByteSlinger;
+				TargetAttributes = {
+					4C19C42D1F55DD1200613233 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 3PQF87SAEW;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4C19C4291F55DD1200613233 /* Build configuration list for PBXProject "CSVDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4C19C4251F55DD1200613233;
+			productRefGroup = 4C19C42F1F55DD1200613233 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4C19C45C1F55DDB900613233 /* Products */;
+					ProjectRef = 4C19C45B1F55DDB900613233 /* SpreadsheetView.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				4C19C42D1F55DD1200613233 /* CSVDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4C19C4601F55DDB900613233 /* SpreadsheetView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SpreadsheetView.framework;
+			remoteRef = 4C19C45F1F55DDB900613233 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4C19C42C1F55DD1200613233 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C19C4591F55DD8600613233 /* people.csv in Resources */,
+				4C19C43F1F55DD1200613233 /* LaunchScreen.storyboard in Resources */,
+				4C19C4541F55DD8600613233 /* cities.csv in Resources */,
+				4C19C4551F55DD8600613233 /* gps.csv in Resources */,
+				4C19C43C1F55DD1200613233 /* Assets.xcassets in Resources */,
+				4C19C4371F55DD1200613233 /* Main.storyboard in Resources */,
+				4C19C45A1F55DD8600613233 /* stationary.csv in Resources */,
+				4C278E331F578C3C005FC793 /* sample.csv in Resources */,
+				4C19C4571F55DD8600613233 /* oscar_age_female.csv in Resources */,
+				4C19C4581F55DD8600613233 /* oscar_age_male.csv in Resources */,
+				4C19C4561F55DD8600613233 /* mlb_players.csv in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C19C42A1F55DD1200613233 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C19C4511F55DD8600613233 /* CSVFile.swift in Sources */,
+				4C19C4531F55DD8600613233 /* Extensions.swift in Sources */,
+				4C19C4341F55DD1200613233 /* ViewController.swift in Sources */,
+				4C19C43A1F55DD1200613233 /* CSVDemo.xcdatamodeld in Sources */,
+				4C19C4321F55DD1200613233 /* AppDelegate.swift in Sources */,
+				4C19C4521F55DD8600613233 /* CSVViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4C19C4641F55DE1E00613233 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SpreadsheetView;
+			targetProxy = 4C19C4631F55DE1E00613233 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4C19C4351F55DD1200613233 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C19C4361F55DD1200613233 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4C19C43D1F55DD1200613233 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C19C43E1F55DD1200613233 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4C19C4411F55DD1200613233 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4C19C4421F55DD1200613233 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4C19C4441F55DD1200613233 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3PQF87SAEW;
+				INFOPLIST_FILE = CSVDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.byteslinger.CSVDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4C19C4451F55DD1200613233 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3PQF87SAEW;
+				INFOPLIST_FILE = CSVDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.byteslinger.CSVDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4C19C4291F55DD1200613233 /* Build configuration list for PBXProject "CSVDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C19C4411F55DD1200613233 /* Debug */,
+				4C19C4421F55DD1200613233 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C19C4431F55DD1200613233 /* Build configuration list for PBXNativeTarget "CSVDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C19C4441F55DD1200613233 /* Debug */,
+				4C19C4451F55DD1200613233 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4C19C4381F55DD1200613233 /* CSVDemo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4C19C4391F55DD1200613233 /* CSVDemo.xcdatamodel */,
+			);
+			currentVersion = 4C19C4391F55DD1200613233 /* CSVDemo.xcdatamodel */;
+			path = CSVDemo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 4C19C4261F55DD1200613233 /* Project object */;
+}
