@@ -190,7 +190,6 @@ public class SpreadsheetView: UIView {
         // get the corner heading if there is one
         if (firstDataColumnIsHeading && firstDataRowIsHeading) {
             self.cornerHeading.font = UIFont.boldSystemFont(ofSize: self.headingLabelFontSize)
-            self.cornerHeading.backgroundColor = self.headingBackgroundColor
             self.cornerHeading.textColor = self.headingLabelFontColor
             self.cornerHeading.text = self.getData(row: 0, col: 0, headingRow: false, headingColumn: false)
         } else {
@@ -244,7 +243,18 @@ public class SpreadsheetView: UIView {
 
            // if 1st col is a heading set the width to the max width
             if (self.firstDataColumnIsHeading) {
-                self.headingColumnWidth = self.getColumnWidth(forCol: 0)
+                var columnWidth = self.getColumnWidth(forCol: 0)
+                
+                if (self.firstDataRowIsHeading) {
+                    let heading = self.getData(row: 0, col: 0, headingRow: false, headingColumn: false)
+                    let headingWidth = self.calculateColumnWidth(heading, isHeading: true) + self.cornerButton.frame.width
+                    
+                    if (headingWidth > columnWidth) {
+                        columnWidth = headingWidth
+                    }
+                }
+                
+                self.headingColumnWidth = columnWidth
             } else {
                 // set width to width of widest row number 
                 // highest number not necessarily widest depending on font
