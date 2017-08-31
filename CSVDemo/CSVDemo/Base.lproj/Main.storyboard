@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -149,7 +148,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x06-Ay-1lh" customClass="SpreadsheetView" customModule="SpreadsheetView">
-                                <rect key="frame" x="16" y="64" width="288" height="408"/>
+                                <rect key="frame" x="4" y="64" width="312" height="412"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eNO-6w-4jb" userLabel="Corner View">
                                         <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
@@ -186,7 +185,7 @@
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fq5-Bo-ffj" customClass="HeadingRow" customModule="SpreadsheetView">
-                                        <rect key="frame" x="120" y="0.0" width="168" height="30"/>
+                                        <rect key="frame" x="120" y="0.0" width="192" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ZTF-rF-UzI">
                                             <size key="itemSize" width="84" height="30"/>
@@ -229,7 +228,7 @@
                                         </connections>
                                     </collectionView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="S5D-8D-cTN" customClass="HeadingColumn" customModule="SpreadsheetView">
-                                        <rect key="frame" x="0.0" y="30" width="120" height="378"/>
+                                        <rect key="frame" x="0.0" y="30" width="120" height="382"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="J2N-hX-oYH">
                                             <size key="itemSize" width="120" height="30"/>
@@ -272,18 +271,18 @@
                                         </connections>
                                     </collectionView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="30" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="brQ-7R-NlW" customClass="TableView" customModule="SpreadsheetView">
-                                        <rect key="frame" x="120" y="30" width="168" height="378"/>
+                                        <rect key="frame" x="120" y="30" width="192" height="382"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCell" id="tXN-HE-kfg" userLabel="Table View Cell" customClass="TableViewCell" customModule="SpreadsheetView">
-                                                <rect key="frame" x="0.0" y="28" width="168" height="30"/>
+                                                <rect key="frame" x="0.0" y="28" width="192" height="30"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tXN-HE-kfg" id="ijf-1b-cYu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="168" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="192" height="30"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Zw-mY-0y7" customClass="DataRow" customModule="SpreadsheetView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="168" height="29.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="192" height="29.5"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="79O-1V-9mM">
                                                                 <size key="itemSize" width="84" height="30"/>
@@ -373,9 +372,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="x06-Ay-1lh" firstAttribute="top" secondItem="2Jf-BP-65f" secondAttribute="bottom" id="6RY-M7-1r2"/>
-                            <constraint firstItem="x06-Ay-1lh" firstAttribute="trailing" secondItem="Tl5-vK-kKJ" secondAttribute="trailingMargin" id="fID-cS-FHf"/>
-                            <constraint firstItem="ZK6-g5-kvZ" firstAttribute="top" secondItem="x06-Ay-1lh" secondAttribute="bottom" constant="8" id="pvx-94-eXK"/>
-                            <constraint firstItem="x06-Ay-1lh" firstAttribute="leading" secondItem="Tl5-vK-kKJ" secondAttribute="leadingMargin" id="yB9-En-ezm"/>
+                            <constraint firstAttribute="trailing" secondItem="x06-Ay-1lh" secondAttribute="trailing" constant="4" id="6oW-hX-dd8"/>
+                            <constraint firstItem="x06-Ay-1lh" firstAttribute="leading" secondItem="Tl5-vK-kKJ" secondAttribute="leading" constant="4" id="XVv-Cv-gg0"/>
+                            <constraint firstItem="ZK6-g5-kvZ" firstAttribute="top" secondItem="x06-Ay-1lh" secondAttribute="bottom" constant="4" id="pvx-94-eXK"/>
                         </constraints>
                     </view>
                     <connections>
