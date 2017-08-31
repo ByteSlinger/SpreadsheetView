@@ -189,6 +189,9 @@ public class SpreadsheetView: UIView {
         
         // get the corner heading if there is one
         if (firstDataColumnIsHeading && firstDataRowIsHeading) {
+            self.cornerHeading.font = UIFont.boldSystemFont(ofSize: self.headingLabelFontSize)
+            self.cornerHeading.backgroundColor = self.headingBackgroundColor
+            self.cornerHeading.textColor = self.headingLabelFontColor
             self.cornerHeading.text = self.getData(row: 0, col: 0, headingRow: false, headingColumn: false)
         } else {
             self.cornerHeading.text = ""
