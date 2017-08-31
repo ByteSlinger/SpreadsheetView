@@ -24,7 +24,9 @@ class HeadingRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDa
         self.dataSource = self
         self.delegate = self
         
-        self.isScrollEnabled = false        // allow TableView to handle scrolling
+        self.showsHorizontalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false
+        self.isScrollEnabled = true
         self.allowsMultipleSelection = true
         
         // turn off all bouncing so scrolling/syncing works properly
@@ -34,15 +36,13 @@ class HeadingRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDa
      }
     
     // sync the heading row with the passed contentOffset
-    func scrollTo(_ offset: CGPoint) {
+    func scrollHorizontal(_ offset: CGPoint) {
         if (self.isScrolling == false) {
             self.isScrolling = true
 
             if (offset.x != self.contentOffset.x) {
                 self.contentOffset.x = offset.x
             }
-            
-            self.reloadData()
             
             self.isScrolling = false
         }
@@ -55,13 +55,20 @@ class HeadingRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDa
         self.scrollToItem(at: indexPath, at: .left, animated: false)
     }
     
+    // MARK: - UIScrollViewDelegate Methods
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        
+        self.spreadsheetView.scrollHorizontal(offset,updateHeadingRow: false, updateTableView: true)
+    }
+    
     // MARK: - UICollectionViewDelegateFlowLayout protocol
     
     // return the size of the requested cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         let height = collectionView.frame.height
-        let width = self.spreadsheetView.getColumnWidth(forCol: indexPath.row)
+        let width = self.spreadsheetView.getDataColumnWidth(forCol: indexPath.row)
         
         return CGSize(width: width, height: height)
     }

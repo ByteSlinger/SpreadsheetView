@@ -27,8 +27,9 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         self.dataSource = self
         self.delegate = self
         
-        // ensure that scroll is enabled
-        self.isScrollEnabled = true
+        self.showsHorizontalScrollIndicator = true
+        self.showsVerticalScrollIndicator = true
+        self.isScrollEnabled = true                 // this must be true for vertical scrolling to work
         self.allowsMultipleSelection = true
         
         // setup the bouncing and touches so they work for the spreadsheetView
@@ -49,6 +50,19 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         self.rowAlternateColor = self.spreadsheetView.rowAlternateColor
         
         self.backgroundColor = self.rowBackgroundColor
+    }
+    
+    // sometimes this is the best way to force the reload of cells
+    func reloadVisible() {
+         let visibleCells = self.visibleCells
+        
+         var indexPaths = [IndexPath]()
+         
+         for cell in visibleCells {
+            indexPaths.append(IndexPath(row: cell.tag, section: 0))
+         }
+         
+         self.reloadRows(at: indexPaths, with: .none)
     }
     
     // set the isSelected property for the passed column in all visible rows
@@ -76,8 +90,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     
     // scroll all visible rows to the passed offset
-    func scrollTo(_ offset: CGPoint) {
-        
+    func scrollHorizontal(_ offset: CGPoint) {
         if (self.isScrolling == false) {
             self.isScrolling = true             // turn on sempahore to prevent infinite loop
             
@@ -89,6 +102,17 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
                 
                 tableViewCell.dataRow.setContentOffset(xOffset, animated: false)
             }
+            
+            self.isScrolling = false            // turn off semaphore since all cells are scrolled
+        }
+    }
+    
+    // scroll all visible rows to the passed offset
+    func scrollVertical(_ offset: CGPoint) {
+        if (self.isScrolling == false) {
+            self.isScrolling = true             // turn on sempahore to prevent infinite loop
+
+            self.contentOffset.y = offset.y
             
             self.isScrolling = false            // turn off semaphore since all cells are scrolled
         }
@@ -112,12 +136,11 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // MARK
-    // UIScrollViewDelegate Methods
+    // MARK - UIScrollViewDelegate Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
         
-        self.spreadsheetView.scrollVertical(offset)
+        self.spreadsheetView.scrollVertical(offset,updateHeadingColumn: true, updateTableView: false)
     }
     
     // MARK - UITableViewDelegate and UITableViewDataSource Methods
@@ -145,7 +168,7 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         var offset = self.spreadsheetView.getCurrentOffset()
         offset.y = 0
         
-        tableViewCell.dataRow.scrollTo(offset)
+        tableViewCell.dataRow.scrollHorizontal(offset)
 
         // alternate the bg color on rows
         if (indexPath.row % 2 == 0) {
@@ -153,7 +176,5 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         } else {
             tableViewCell.dataRow.backgroundColor = self.rowAlternateColor
         }
-        
-        tableViewCell.dataRow.reloadData()
     }
 }

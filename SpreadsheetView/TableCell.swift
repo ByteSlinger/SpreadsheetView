@@ -61,6 +61,8 @@ class TableCell: UICollectionViewCell {
     
     // setup this TableCell.  Use the filled label.text to adjust the cell / column size
     func setup(row: Int, col: Int, value: String, heading: Bool, selected: Bool,  adjustWidth: Bool) {
+        var newWidth: CGFloat = 0
+        
         self.isHeading = heading
         
         self.label.text = value
@@ -78,7 +80,9 @@ class TableCell: UICollectionViewCell {
             self.backgroundColor = self.normalBackgroundColor
         } else {
             self.label.font = UIFont.systemFont(ofSize: self.fontSize)
-            if (Double(self.label.text!) == nil) {  //  not numeric
+            let number = Double(self.label.text!)
+            
+            if (number == nil) {  //  not numeric
                 self.label.textAlignment = .left
             } else {
                 self.label.textAlignment = .right
@@ -88,12 +92,13 @@ class TableCell: UICollectionViewCell {
         }
         
         if (adjustWidth) {
-            let length = self.label.text?.lengthOfBytes(using: .ascii) ?? 3
-            let labelWidth = (CGFloat(length) * self.fontSize)
-            let margins = self.leftMargin + self.rightMargin
-            let cellWidth = labelWidth + margins
+            // max column widths were preloaded - get them from SpreadsheetView
+            if (self.reuseIdentifier == HEADING_COLUMN_ID) {
+                newWidth = self.spreadsheetView.getHeadingColumnWidth()
+            } else {
+                newWidth = self.spreadsheetView.getDataColumnWidth(forCol: col)
+            }
             
-            let newWidth = self.spreadsheetView.getMaxColumnWidth(forCol: col, width: cellWidth)
             self.frame.size.width = newWidth
         }
         

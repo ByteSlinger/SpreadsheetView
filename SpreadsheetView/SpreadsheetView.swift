@@ -5,6 +5,7 @@
 //  The SpreadsheetView contains:
 //
 //  SpreadsheetView (UIView)
+//      - CornerView (UIView) - height and width constraints control HeadingRow height and HeadingColumn width
 //      - HeadingRow (UICollectionView - horizontal)
 //          - TableCell (UICollectionViewCell)
 //          ...
@@ -43,9 +44,11 @@ import UIKit
 let me = "SpreadsheetView"
 
 // for all CollectionViewCells
-let DEFAULT_MAX_CELL_WIDTH: CGFloat = 120.0
-let DEFAULT_MARGIN: CGFloat = 8.0
-let DEFAULT_LABEL_FONT_SIZE: CGFloat = 18.0
+let SPREADSHEETVIEW_MAX_CELL_WIDTH: CGFloat = 120.0
+let SPREADSHEETVIEW_MIN_CELL_WIDTH: CGFloat = 40.0
+let SPREADSHEETVIEW_DEFAULT_CELL_WIDTH: CGFloat = 64.0
+let SPREADSHEETVIEW_DEFAULT_MARGIN: CGFloat = 8.0
+let SPREADSHEETVIEW_DEFAULT_LABEL_FONT_SIZE: CGFloat = 18.0
 
 // the dataSource returns the row/col data to fill the SpreadsheetView
 public protocol SpreadsheetViewDataSource {
@@ -56,13 +59,15 @@ public protocol SpreadsheetViewDataSource {
 
 public class SpreadsheetView: UIView {
 
+    @IBOutlet weak var cornerView: UIView!
     @IBOutlet weak var cornerButton: UIButton!
+    @IBOutlet weak var cornerHeading: UILabel!
     @IBOutlet weak var headingRowView: HeadingRow!
     @IBOutlet weak var headingColumnView: HeadingColumn!
     @IBOutlet weak var tableView: TableView!
 
     // public vars caller can change
-    public var maxCellWidth = DEFAULT_MAX_CELL_WIDTH
+    public var maxCellWidth = SPREADSHEETVIEW_MAX_CELL_WIDTH
     
     // caller can override the colors and font sizes
     public var defaultsOverriden = false      // if true TableView and TableCell use following vars
@@ -71,13 +76,13 @@ public class SpreadsheetView: UIView {
     public var rowAlternateColor = UIColor.lightGray
     public var dataLabelHighlightedTextColor = UIColor.red
     public var dataLabelHighlightedBackgroundColor = UIColor.yellow.withAlphaComponent(0.25)
-    public var dataLabelLeftMargin = DEFAULT_MARGIN    // DOES NOT WORK
-    public var dataLabelRightMargin = DEFAULT_MARGIN   // DOES NOT WORK
-    public var dataLabelFontSize = DEFAULT_LABEL_FONT_SIZE
+    public var dataLabelLeftMargin = SPREADSHEETVIEW_DEFAULT_MARGIN    // DOES NOT WORK
+    public var dataLabelRightMargin = SPREADSHEETVIEW_DEFAULT_MARGIN   // DOES NOT WORK
+    public var dataLabelFontSize = SPREADSHEETVIEW_DEFAULT_LABEL_FONT_SIZE
     public var dataLabelFontColor = UIColor.black
     public var headingBackgroundColor = UIColor.blue
     public var headingLabelFontColor = UIColor.white
-    public var headingLabelFontSize = DEFAULT_LABEL_FONT_SIZE
+    public var headingLabelFontSize = SPREADSHEETVIEW_DEFAULT_LABEL_FONT_SIZE
     
     // call should set these if there are headings in their data
     private var firstDataRowIsHeading = false         // set this to true if the first row has column headings
@@ -92,6 +97,7 @@ public class SpreadsheetView: UIView {
     // array of max column widths by column
     //  NOTE:  may include a header column depending on firstDataColumnIsHeading
     private var maxWidth = [Int: CGFloat]()
+    private var headingColumnWidth: CGFloat = 0
     
     private var currentOffset = CGPoint(x: -1.0, y: -1.0) // used for scrolling
     
@@ -138,11 +144,13 @@ public class SpreadsheetView: UIView {
     
     // for TableCell to blink current corner
     func isCurrentCorner(_ row: Int, _ col: Int) -> Bool {
+        var isCorner = false
+        
         if (self.cornerRow == row && self.cornerCol == col) {
-            return true
+            isCorner = true
         }
         
-        return false
+        return isCorner
     }
 
     override public func awakeFromNib() {
@@ -153,6 +161,12 @@ public class SpreadsheetView: UIView {
         self.layer.borderColor = UIColor.lightGray.cgColor
     }
     
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.tableView.reloadVisible()
+    }
+    
     // force any color or font size changes
     public func overrideDefaults() {
         self.defaultsOverriden = true
@@ -160,78 +174,171 @@ public class SpreadsheetView: UIView {
         self.tableView.overrideDefaults()
 
         self.cornerButton.tintColor = self.headingLabelFontColor
-        self.cornerButton.backgroundColor = self.headingBackgroundColor
+        self.cornerView.backgroundColor = self.headingBackgroundColor
         self.headingRowView.backgroundColor = self.headingBackgroundColor
         self.headingColumnView.backgroundColor = self.headingBackgroundColor
     }
     
     // set the dataSource to the passed object, set the first row/col heading vars
     public func setDataSource(dataSource: SpreadsheetViewDataSource, firstDataRowIsHeading: Bool, firstDataColumnIsHeading: Bool) {
-        self.setDataSource(dataSource)
-        
+        self.dataSource = dataSource
         self.firstDataRowIsHeading = firstDataRowIsHeading
         self.firstDataColumnIsHeading = firstDataColumnIsHeading
-    }
-    
-    // set the dataSource to the passed object
-    public func setDataSource(_ dataSource: SpreadsheetViewDataSource) {
-        self.firstDataRowIsHeading = false      // in case dataSoure changed
-        self.firstDataColumnIsHeading = false   // ditto
         
-        self.dataSource = dataSource
+        // get the corner heading if there is one
+        if (firstDataColumnIsHeading && firstDataRowIsHeading) {
+            self.cornerHeading.text = self.getData(row: 0, col: 0, headingRow: false, headingColumn: false)
+        } else {
+            self.cornerHeading.text = ""
+        }
         
         // make sure we free any previous array
         self.isSelected = Array(repeating: Array(repeating: false, count: dataSource.numCols()), count: dataSource.numRows())
         
-        self.updateMaxWidth()       // important - need to know the largest cell in each column
-    }
-    
-    // calc the width for the passed column and return
-    // NOTE:  this is called by CollectionViewCell so the width is based on fontsize and margins
-    func updateMaxColumnWidth(forCol col: Int, width: CGFloat) {
-        let oldWidth = maxWidth[col] ?? 0
-        var newWidth = width
+        self.updateMaxWidth()       // need to know the largest cell in each column
         
-        if (newWidth > self.maxCellWidth) {
-            newWidth = self.maxCellWidth
-        }
-        if (oldWidth == 0 || newWidth > oldWidth) {
-            maxWidth[col] = newWidth
-        }
+        // set width of the heading column (it must be huge in storyboard or this doesn't work)
+        self.setHeadingColumnWidth()
     }
     
-    // update the maxWidth for the passed column and return
-    func getMaxColumnWidth(forCol col: Int, width: CGFloat) -> CGFloat {
-        // preload the column sizes the first time when displaying the first cell
-        if (maxWidth.count == 0) {
-            updateMaxWidth()
-        }
- 
-        let dataCol = self.firstDataColumnIsHeading ? col + 1 : col
+    // set the dataSource to the passed object
+    public func setDataSource(_ dataSource: SpreadsheetViewDataSource) {
+        self.setDataSource(dataSource: dataSource, firstDataRowIsHeading: false, firstDataColumnIsHeading: false)
+    }
+    
+    // call this after the data has been preloaded so we know the largest cell width for first column
+    func setHeadingColumnWidth() {
+        let lWidth = self.getHeadingColumnWidth()
 
-        self.updateMaxColumnWidth(forCol: dataCol, width: width)
+        // This is the magic for resizing HeadingColumn, HeadingRow and TableView
+        // In the Storyboard, CornerView constraints - width controls headingColumn width, height controls headingRow height
+        // and TableView is resized by the HeadingColumn to the left and the HeadingRow on the top
+
+        // remove old width constraint from CornerView
+        for constraint in self.cornerView.constraints {
+            if (constraint.firstAttribute == .width) {
+                self.cornerView.removeConstraint(constraint)
+            }
+        }
+
+        // add new width contstraint - this will force HeadingColumn, HeadingRow and TableView to resize
+        self.cornerView.widthAnchor.constraint(equalToConstant: lWidth).isActive = true
+    }
+    
+    // return the height of the TableView row
+    func getRowHeight() -> CGFloat {
+        let lHeight = self.tableView.rowHeight
         
-        return maxWidth[dataCol]!
+        return lHeight
+    }
+    
+    // return the width of the HeadingColumn
+    func getHeadingColumnWidth() -> CGFloat {
+        // only need to go thru here once
+        if (self.headingColumnWidth < SPREADSHEETVIEW_MIN_CELL_WIDTH) {
+
+           // if 1st col is a heading set the width to the max width
+            if (self.firstDataColumnIsHeading) {
+                self.headingColumnWidth = self.getColumnWidth(forCol: 0)
+            } else {
+                // set width to width of widest row number 
+                // highest number not necessarily widest depending on font
+                // row nums 8, 88, 888, 8888, etc, tend to be the widest for example
+                for row in 0 ... self.numRows() {
+                    let value = String(row)
+                    let lWidth = self.calculateColumnWidth(value, isHeading: true)
+                    
+                    if (lWidth > self.headingColumnWidth) {
+                        self.headingColumnWidth = lWidth
+                    }
+                }
+            }
+        }
+        
+        return self.headingColumnWidth
+    }
+    
+    // return the pre-calculated width for the passed column
+    func getColumnWidth(forCol col: Int) -> CGFloat {
+        var lWidth = SPREADSHEETVIEW_DEFAULT_CELL_WIDTH
+        
+        if (self.maxWidth.count > 0 && self.maxWidth[col] != nil) {
+            lWidth = self.maxWidth[col]!
+        }
+        
+        // ensure that its within app boundaries
+        if (lWidth < SPREADSHEETVIEW_MIN_CELL_WIDTH) {
+            lWidth = SPREADSHEETVIEW_MIN_CELL_WIDTH
+        } else if (lWidth > self.maxCellWidth) {
+            lWidth = self.maxCellWidth
+        }
+        
+        return lWidth
+    }
+    
+    // return the width for the passed data column
+    func getDataColumnWidth(forCol col: Int) -> CGFloat {
+        var dataCol = col
+        
+        if (self.firstDataColumnIsHeading) {
+            dataCol = col + 1
+        }
+        
+        return self.getColumnWidth(forCol: dataCol)
+    }
+    
+    // use a UILabel to get the actual size needed to display the passed text in a label
+    func calculateColumnWidth(_ value: String, isHeading: Bool) -> CGFloat {
+        let label = UILabel()   // use a temporary label to figure out how big a label would be
+        let margins = self.dataLabelLeftMargin + self.dataLabelRightMargin
+        var lWidth = margins + SPREADSHEETVIEW_DEFAULT_CELL_WIDTH
+        
+        if (isHeading) {
+            label.font = UIFont.boldSystemFont(ofSize: self.headingLabelFontSize)
+        } else {
+            label.font = UIFont.systemFont(ofSize: self.dataLabelFontSize)
+        }
+        
+        label.text = value.trimmingCharacters(in: .whitespaces)
+        
+        // let UILabel tell me how big it could be
+        lWidth = margins + label.intrinsicContentSize.width
+       
+        return lWidth
     }
     
     // called the first time in getMaxColumnWidth()
     func updateMaxWidth() {
+        var oldWidth: CGFloat = 0
+        var isHeading = false
+        
         // spin thru all data (and optionally headers) and recalc the max width for each column
         for row in 0 ... self.numRows() - 1 {
             for col in 0 ... self.numCols() - 1 {
                 let value = self.getData(row: row, col: col, headingRow: false, headingColumn: false)
-                let length = value.lengthOfBytes(using: .ascii)
-                let width = (CGFloat(length) * self.dataLabelFontSize)
-                let cellWidth = width + self.dataLabelLeftMargin + self.dataLabelRightMargin
+            
+                if (self.firstDataColumnIsHeading && col == 0) {
+                    isHeading = true
+                } else if (self.firstDataRowIsHeading && row == 0) {
+                    isHeading = true
+                } else {
+                    isHeading = false
+                }
                 
-                self.updateMaxColumnWidth(forCol: col, width: cellWidth)
+                // calculate the width based on a filled UILabel
+                let calculatedWidth = self.calculateColumnWidth(value, isHeading: isHeading)
+                
+                if (self.firstDataColumnIsHeading && row == 0 && col == 0) {
+                    // skip the top right corner width if 1st col is heading
+                } else {
+                    oldWidth = self.maxWidth[col] ?? 0
+                
+                    if (oldWidth == 0 || calculatedWidth > oldWidth) {
+                        self.maxWidth[col] = calculatedWidth
+                    }
+                }
             }
         }
-    }
-    
-    // return the width for the passed column
-    func getColumnWidth(forCol col: Int) -> CGFloat {
-        return self.getMaxColumnWidth(forCol: col, width: 0)
     }
     
     // return the current content offset
@@ -240,23 +347,23 @@ public class SpreadsheetView: UIView {
     }
     
     // scroll the tableView and headingRow horizontally
-    func scrollHorizontal(_ offset: CGPoint) {
+    func scrollHorizontal(_ offset: CGPoint, updateHeadingRow: Bool, updateTableView: Bool) {
         if (self.isScrolling == false) {
             self.isScrolling = true                 // turn on semaphore
             
             if (self.currentOffset.x != offset.x) {
-                //print("\(me).ScrollHorizontal offset = \(offset.x)/\(offset.y), current = \(self.currentOffset.x)/\(self.currentOffset.y)")
-                
                 self.cornerCol = -1
                 self.cornerRow = -1
                 
                 let xOffset = CGPoint(x: offset.x, y: 0)
                 
                 self.currentOffset.x = xOffset.x
-                
-                self.tableView.scrollTo(xOffset)
-                
-                self.headingRowView.scrollTo(xOffset)
+                if (updateHeadingRow) {
+                    self.headingRowView.scrollHorizontal(xOffset)
+                }
+                if (updateTableView) {
+                    self.tableView.scrollHorizontal(xOffset)
+                }
             }
             
             self.isScrolling = false                // turn off semaphore
@@ -264,13 +371,11 @@ public class SpreadsheetView: UIView {
     }
     
     // scroll the headingColumn vertically (tableView handles itself)
-    func scrollVertical(_ offset: CGPoint) {
+    func scrollVertical(_ offset: CGPoint, updateHeadingColumn: Bool, updateTableView: Bool) {
         if (self.isScrolling == false) {
             self.isScrolling = true                 // turn on semaphore
             
             if (self.currentOffset.y != offset.y) {
-                //print("\(me).ScrollVertical offset = \(offset.x)/\(offset.y), current = \(self.currentOffset.x)/\(self.currentOffset.y)")
-
                 self.cornerCol = -1
                 self.cornerRow = -1
 
@@ -278,7 +383,12 @@ public class SpreadsheetView: UIView {
                 
                 self.currentOffset.y = offset.y
                 
-                self.headingColumnView.scrollTo(yOffset)    // sync heading column with tableView
+                if (updateHeadingColumn) {
+                    self.headingColumnView.scrollVertical(yOffset)    // sync heading column with tableView
+                }
+                if (updateTableView) {
+                    self.tableView.scrollVertical(yOffset)
+                }
             }
             
             self.isScrolling = false              // turn off semaphore
@@ -287,8 +397,8 @@ public class SpreadsheetView: UIView {
     
     // scroll the TableView to the passed row and all the DataRow to the passed column
     func scrollToCell(_ row: Int, _ col: Int) {
-        self.tableView.scrollToCol(self.checkIndex(index: col, lower: 0, upper: self.numDataCols()))
         self.tableView.scrollToRow(self.checkIndex(index: row, lower: 0, upper: self.numDataRows()))
+        self.tableView.scrollToCol(self.checkIndex(index: col, lower: 0, upper: self.numDataCols()))
     }
     
     // convert a numeric column heading to alpha (1 = A)

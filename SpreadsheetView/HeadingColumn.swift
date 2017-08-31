@@ -24,7 +24,9 @@ class HeadingColumn: UICollectionView, UICollectionViewDelegate, UICollectionVie
         self.dataSource = self
         self.delegate = self
         
-        self.isScrollEnabled = false        // allow TableView to handle scrolling
+        self.showsHorizontalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false
+        self.isScrollEnabled = true        // allow TableView to handle scrolling
         self.allowsMultipleSelection = true
         
         // turn off all bouncing so scrolling/syncing works properly
@@ -34,15 +36,13 @@ class HeadingColumn: UICollectionView, UICollectionViewDelegate, UICollectionVie
     }
     
     // sync the heading row with the passed contentOffset
-    func scrollTo(_ offset: CGPoint) {
+    func scrollVertical(_ offset: CGPoint) {
         if (self.isScrolling == false) {
             self.isScrolling = true
             
             if (offset.y != self.contentOffset.y) {
                 self.contentOffset.y = offset.y
             }
-            
-            self.reloadData()
             
             self.isScrolling = false
         }
@@ -53,6 +53,24 @@ class HeadingColumn: UICollectionView, UICollectionViewDelegate, UICollectionVie
         let indexPath = IndexPath(item: item, section: 0)
         
         self.scrollToItem(at: indexPath, at: .top, animated: false)
+    }
+    
+    // MARK: - UIScrollViewDelegate Methods
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        
+        self.spreadsheetView.scrollVertical(offset,updateHeadingColumn: false, updateTableView: true)
+    }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout protocol
+    
+    // return the size of the requested cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        let height = self.spreadsheetView.getRowHeight()
+        let width = self.spreadsheetView.getHeadingColumnWidth()
+        
+        return CGSize(width: width, height: height)
     }
     
     // MARK: - UICollectionViewDataSource protocol
@@ -76,9 +94,10 @@ class HeadingColumn: UICollectionView, UICollectionViewDelegate, UICollectionVie
         let row = collectionView.tag
         let col = indexPath.row
         
-        let value = self.spreadsheetView.getRowHeading(row: indexPath.row)
+        let value = self.spreadsheetView.getRowHeading(row: col)    // row/col reversed for vertical collectionView
         
-        tableCell.setup(row: row, col: col, value: value,  heading: true, selected: false, adjustWidth: false)
+        // for vertical headingColumn, row and col are reversed
+        tableCell.setup(row: col, col: row, value: value,  heading: true, selected: false, adjustWidth: true)
     }
     
     // MARK: - UICollectionViewDelegate protocol

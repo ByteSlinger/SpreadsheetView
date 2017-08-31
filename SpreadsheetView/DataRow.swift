@@ -24,6 +24,8 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
         self.dataSource = self
         self.delegate = self
         
+        self.showsHorizontalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false       
         self.allowsMultipleSelection = true
         
         // turn off all bouncing so scrolling/syncing works cleanly
@@ -36,12 +38,12 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
 
-        self.scrollTo(offset)
+        // tell the spreadsheetView to scroll all visible DataRows
+        self.spreadsheetView.scrollHorizontal(offset,updateHeadingRow: true, updateTableView: true)
     }
     
     // set the contentOffset and tell SpreadsheetView to scroll all visible rows
-    func scrollTo(_ offset: CGPoint) {
-        
+    func scrollHorizontal(_ offset: CGPoint) {
         if (self.isScrolling == false) {
             self.isScrolling = true             // turn on sempahore to prevent infinite loop
             
@@ -49,10 +51,7 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
                 self.contentOffset = offset
             }
             
-            self.reloadData()
-            
-            // tell the spreadsheetView to scroll all visible DataRows
-            self.spreadsheetView.scrollHorizontal(self.contentOffset)
+            self.reloadData()   // for cornerButton scrolling to work properly
             
             self.isScrolling = false            // turn off semaphore since all cells are scrolled
         }
@@ -109,7 +108,7 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         let height = collectionView.frame.height
-        let width = self.spreadsheetView.getColumnWidth(forCol: indexPath.row)
+        let width = self.spreadsheetView.getDataColumnWidth(forCol: indexPath.row)
         
         return CGSize(width: width, height: height)
     }
@@ -163,5 +162,13 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
         cell.setIsSelected(false)
 
         self.spreadsheetView.setSelected(row: collectionView.tag, col: indexPath.row, selected: false)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return true
     }
 }
