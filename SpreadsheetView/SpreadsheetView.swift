@@ -6,6 +6,8 @@
 //
 //  SpreadsheetView (UIView)
 //      - CornerView (UIView) - height and width constraints control HeadingRow height and HeadingColumn width
+//          - CornerButton (UIButton) - Navigates to the 4 corners of the spreadsheet
+//          - CornerHeading (UILabel) - Heading if column and row headings are in the data
 //      - HeadingRow (UICollectionView - horizontal)
 //          - TableCell (UICollectionViewCell)
 //          ...
