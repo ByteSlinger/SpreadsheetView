@@ -120,7 +120,19 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     // scroll to the passed row
     func scrollToRow(_ row: Int) {
-        let indexPath = IndexPath(item: row, section: 0)
+        let numDataRows = self.spreadsheetView.numDataRows()
+        var dataRow = row
+        
+        // sanity check
+        if (row < 0) {
+            dataRow = 0
+        } else if (row >= numDataRows) {
+            dataRow = numDataRows - 1
+        }
+        
+        let indexPath = IndexPath(item: dataRow, section: 0)
+        
+        self.reloadData()
         
         self.scrollToRow(at: indexPath, at: .top, animated: false)
     }
@@ -128,11 +140,20 @@ class TableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     // scroll all visible rows to the passed column
     func scrollToCol(_ col: Int) {
         let visible = self.visibleCells
+        let numDataCols = self.spreadsheetView.numDataCols()
+        var dataCol = col
+        
+        // sanity check
+        if (col < 0) {
+            dataCol = 0
+        } else if (col >= numDataCols) {
+            dataCol = numDataCols - 1
+        }
         
         for cell in visible {
             let tableViewCell = cell as! TableViewCell
             
-            tableViewCell.dataRow.scrollToCell(col)
+            tableViewCell.dataRow.scrollToCell(dataCol)
         }
     }
     
