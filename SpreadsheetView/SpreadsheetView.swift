@@ -201,13 +201,31 @@ public class SpreadsheetView: UIView {
         
         self.updateMaxWidth()       // need to know the largest cell in each column
         
-        // set width of the heading column (it must be huge in storyboard or this doesn't work)
+        // set width of the heading column
         self.setHeadingColumnWidth()
+        
+        self.reloadData()
     }
     
     // set the dataSource to the passed object
     public func setDataSource(_ dataSource: SpreadsheetViewDataSource) {
         self.setDataSource(dataSource: dataSource, firstDataRowIsHeading: false, firstDataColumnIsHeading: false)
+    }
+    
+    // reload the data for my components
+    public func reloadData() {
+        self.headingRowView.reloadData()
+        self.headingColumnView.reloadData()
+        self.tableView.reloadData()
+    }
+    
+    // allow caller to scroll to the last line
+    public func scrollToBottom() {
+        if (self.dataSource != nil && self.numDataRows() > 0) {
+            self.tableView.scrollToRow(self.numDataRows() - 1)
+        
+            self.reloadData()
+        }
     }
     
     // call this after the data has been preloaded so we know the largest cell width for first column
@@ -322,34 +340,40 @@ public class SpreadsheetView: UIView {
         return lWidth
     }
     
+    // set the max column width
+    func setMaxColumnWidth(col: Int, width: CGFloat) {
+        let oldWidth = self.maxWidth[col] ?? 0
+        
+        if (oldWidth == 0 || width > oldWidth) {
+            self.maxWidth[col] = width
+        }
+    }
+    
     // called the first time in getMaxColumnWidth()
     func updateMaxWidth() {
-        var oldWidth: CGFloat = 0
         var isHeading = false
         
         // spin thru all data (and optionally headers) and recalc the max width for each column
-        for row in 0 ... self.numRows() - 1 {
-            for col in 0 ... self.numCols() - 1 {
-                let value = self.getData(row: row, col: col, headingRow: false, headingColumn: false)
-            
-                if (self.firstDataColumnIsHeading && col == 0) {
-                    isHeading = true
-                } else if (self.firstDataRowIsHeading && row == 0) {
-                    isHeading = true
-                } else {
-                    isHeading = false
-                }
+        if (self.numRows() > 0 && self.numCols() > 0) {
+            for row in 0 ... self.numRows() - 1 {
+                for col in 0 ... self.numCols() - 1 {
+                    let value = self.getData(row: row, col: col, headingRow: false, headingColumn: false)
                 
-                // calculate the width based on a filled UILabel
-                let calculatedWidth = self.calculateColumnWidth(value, isHeading: isHeading)
-                
-                if (self.firstDataColumnIsHeading && row == 0 && col == 0) {
-                    // skip the top right corner width if 1st col is heading
-                } else {
-                    oldWidth = self.maxWidth[col] ?? 0
-                
-                    if (oldWidth == 0 || calculatedWidth > oldWidth) {
-                        self.maxWidth[col] = calculatedWidth
+                    if (self.firstDataColumnIsHeading && col == 0) {
+                        isHeading = true
+                    } else if (self.firstDataRowIsHeading && row == 0) {
+                        isHeading = true
+                    } else {
+                        isHeading = false
+                    }
+                    
+                    // calculate the width based on a filled UILabel
+                    let calculatedWidth = self.calculateColumnWidth(value, isHeading: isHeading)
+                    
+                    if (self.firstDataColumnIsHeading && row == 0 && col == 0) {
+                        // skip the top right corner width if 1st col is heading
+                    } else {
+                        self.setMaxColumnWidth(col: col, width: calculatedWidth)
                     }
                 }
             }
@@ -514,6 +538,10 @@ public class SpreadsheetView: UIView {
             headingCol < self.numCols()) {
                 
             heading = self.dataSource!.getData(row: 0, col: headingCol)
+            
+            let width = self.calculateColumnWidth(heading, isHeading: true)
+            
+            self.setMaxColumnWidth(col: col, width: width)
         }
         
         return heading
@@ -534,6 +562,41 @@ public class SpreadsheetView: UIView {
 
         return heading
     }
+    
+    // make sure isSelected array is as large as needed to prevent Index out of range errors
+    func getSetIsSelected(row: Int, col: Int, set: Bool, isSelected: Bool) -> Bool {
+        var existingCols = self.isSelected.count > 0 ? self.isSelected[0].count : 0
+        
+        // sanity check
+        if (row < 0 || col < 0) {
+            return false
+        }
+        
+        // get a max column count
+        if (existingCols < col) {
+            existingCols = col
+        }
+        
+        // add new rows until we have enough
+        while (self.isSelected.count <= row) {
+            self.isSelected.append(Array(repeating: false, count: existingCols))
+        }
+        
+        // add new cols to all rows until we have enough
+        for i in 0 ... self.isSelected.count - 1 {
+            while (self.isSelected[i].count <= existingCols) {
+                self.isSelected[i].append(false)
+            }
+        }
+        
+        // now set the new isSelected value
+        if (set) {
+            self.isSelected[row][col] = isSelected
+        }
+        
+        return self.isSelected[row][col]
+    }
+    
     // sanity check an index
     func checkIndex(index: Int, lower: Int, upper: Int) -> Int {
         var result = index
@@ -551,8 +614,8 @@ public class SpreadsheetView: UIView {
     func setSelected(row: Int, col: Int, selected: Bool) {
         let dataRow = self.checkIndex(index: row, lower: 0, upper: self.numDataRows())
         let dataCol = self.checkIndex(index: col, lower: 0, upper: self.numDataCols())
-        
-        self.isSelected[dataRow][dataCol] = selected
+
+        _ = self.getSetIsSelected(row: dataRow, col: dataCol, set: true, isSelected: selected)
     }
     
     // return the selected status of the passed cell
@@ -561,7 +624,7 @@ public class SpreadsheetView: UIView {
         let dataCol = self.checkIndex(index: col, lower: 0, upper: self.numDataCols())
         var isSelected = false
         
-        isSelected = self.isSelected[dataRow][dataCol]
+        isSelected = self.getSetIsSelected(row: dataRow, col: dataCol, set: false, isSelected: false)
         
         return isSelected
     }
@@ -571,7 +634,7 @@ public class SpreadsheetView: UIView {
         let dataRow = self.checkIndex(index: row, lower: 0, upper: self.numDataRows())
 
         for col in 0 ... self.numCols() - 1 {
-            self.isSelected[dataRow][col] = selected
+            _ = self.getSetIsSelected(row: dataRow, col: col, set: true, isSelected: selected)
         }
         
         self.tableView.setRowSelected(row: row, selected: selected)
@@ -582,7 +645,7 @@ public class SpreadsheetView: UIView {
         let dataCol = self.checkIndex(index: col, lower: 0, upper: self.numDataCols())
 
         for row in 0 ... self.numRows() - 1 {
-            self.isSelected[row][dataCol] = selected
+            _ = self.getSetIsSelected(row: row, col: dataCol, set: true, isSelected: selected)
         }
 
         self.tableView.setColumnSelected(col: col, selected: selected)
