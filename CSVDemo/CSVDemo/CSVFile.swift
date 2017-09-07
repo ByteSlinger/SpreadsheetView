@@ -16,12 +16,13 @@ let CSVFILE_DEFAULT_DELIMITER: Character = ","
 
 public class CSVFile {
     private let me = "CSVFile"
-
-    private var fileName = "sample"
+    
+    private var fileName = ""
     private var fileType = ".csv"
     private var inDocumentDirectory = true
     private var fileURL: URL? = nil
     private var fileHandle: FileHandle? = nil
+    private var openedForWriting = false
     private var delimiter: Character = CSVFILE_DEFAULT_DELIMITER
     private var lineCount = 0                   // number of lines (rows) in the file
     private var itemCount = 0                   // items (columns) in first line (row) (this can get larger - see parseLine())
@@ -30,8 +31,26 @@ public class CSVFile {
     private var currentLineNum = -1             // line number (row) of currently read and parsed line (zero relative)
     private var currentLineItems = [String]()   // array of items parsed from current line
     
+    private func initVars() {
+        if (self.fileHandle != nil) {
+            self.fileHandle?.closeFile()
+        }
+        self.fileURL = nil
+        self.fileHandle = nil
+        self.openedForWriting = false
+        self.delimiter = CSVFILE_DEFAULT_DELIMITER
+        self.lineCount = 0
+        self.itemCount = 0
+        self.fileLength = 0
+        self.currentLineNum = -1
+        self.offsets.removeAll()
+        self.currentLineItems.removeAll()
+    }
+    
     // open the file and load the line offsets
     public init(fileName: String, ofType: String, delimiter: Character, inDocumentDirectory: Bool) {
+        self.initVars()
+        
         self.fileName = fileName
         self.fileType = ofType
         self.delimiter = delimiter
@@ -50,19 +69,25 @@ public class CSVFile {
         if (self.fileURL == nil) {
             print("\(me).init(\(fileName),\(ofType),\(inDocumentDirectory)) Failed!")
         } else {
-            self.loadOffsets()
-            
-            // read the first line to get the number of items (columns) in each line (row)
-            let line = self.readLine(0)
-            if (line != nil) {
-                self.currentLineItems = self.parseLine(line!)
-                self.itemCount = self.currentLineItems.count
+            if (self.open(openForWriting: false)) { // may be re-opened for writing later
+                self.loadOffsets()
+                
+                // read the first line to get the number of items (columns) in each line (row)
+                let line = self.readLine(0)
+                if (line != nil) {
+                    self.currentLineItems = self.parseLine(line!)
+                    self.itemCount = self.currentLineItems.count
+                }
             }
         }
     }
     
     public convenience init(fileName: String, ofType: String, inDocumentDirectory: Bool) {
         self.init(fileName: fileName, ofType: ofType, delimiter: CSVFILE_DEFAULT_DELIMITER, inDocumentDirectory: inDocumentDirectory)
+    }
+    
+    public convenience init(fileName: String, inDocumentDirectory: Bool) {
+        self.init(fileName: fileName, ofType: "", delimiter: CSVFILE_DEFAULT_DELIMITER, inDocumentDirectory: inDocumentDirectory)
     }
     
     // return my private internal variables
@@ -95,7 +120,7 @@ public class CSVFile {
     private func createBundleURL(fileName: String, ofType: String) -> URL? {
         var newURL: URL? = nil
         let bundlePath = Bundle.main.path(forResource: fileName, ofType: ofType)
-
+        
         if (bundlePath == nil) {
             print("\(me).createBundleURL(\(fileName),\(ofType)) - Failed!")
         } else {
@@ -109,7 +134,7 @@ public class CSVFile {
     private func createDocumentURL(fileName: String, ofType: String) -> URL? {
         var newURL: URL? = nil
         let dir = try? FileManager.default.url(for: .documentDirectory,
-                                                in: .userDomainMask, appropriateFor: nil, create: true)
+                                               in: .userDomainMask, appropriateFor: nil, create: true)
         
         if (dir == nil) {
             print("\(me).create:  Failed to get directory URL!")
@@ -120,63 +145,106 @@ public class CSVFile {
         return newURL   // may be nil
     }
     
+    // open the file for reading or writing, create it if necessary
+    private func open(openForWriting: Bool) -> Bool {
+        //print("\(me).open(openForWriting: \(openForWriting))")
+        
+        var result = false
+        
+        if (self.fileURL == nil) {
+            print("\(me).open(openForWriting: \(openForWriting) - fileURL is empty!")
+        } else {
+            if (self.fileHandle != nil) {
+                self.fileHandle?.closeFile()
+            }
+            
+            // create the file if it does not exist
+            if (FileManager.default.fileExists(atPath: self.path()!) == false) {
+                FileManager.default.createFile(atPath: self.path()!, contents: nil, attributes: nil)
+            }
+            
+            if (openForWriting) {
+                self.fileHandle = try? FileHandle.init(forUpdating: self.fileURL!)
+                if (self.fileHandle == nil) {
+                    print("\(me).open:  Failed to open \(self.path() ?? "?") for updating!")
+                } else {
+                    self.openedForWriting = true
+                    
+                    result = true
+                }
+            } else {    // open for reading
+                self.fileHandle = try? FileHandle.init(forReadingFrom: self.fileURL!)
+                if (self.fileHandle == nil) {
+                    print("\(me).open:  Failed to open \(self.path() ?? "?") for reading!")
+                } else {
+                    self.openedForWriting = false
+                    
+                    result = true
+                }
+            }
+        }
+        
+        return result
+    }
+    
     // spin thru the file and save the offsets to the beginning of each line
     private func loadOffsets() {
         self.lineCount = 0
         self.fileLength = 0
         self.offsets.removeAll()
         
-        self.fileHandle = try? FileHandle.init(forReadingFrom: self.fileURL!)
         if (self.fileHandle == nil) {
-            print("\(me).loadOffsets:  Failed to open \(self.fileURL?.relativeString ?? "?") for reading!")
+            print("\(me).loadOffsets:  file \(self.fileURL?.relativeString ?? "?") has not been opened!")
         } else {
-            var data = Data.init(capacity: 4096)
+            let eof = self.fileHandle!.seekToEndOfFile()
             
-            // my loop vars
-            var done = false
-            var lines = 0
-            var pos = 0
-            var eol = false
-            self.offsets.append(pos)   // always the first line
-            lines += 1
-            
-            while (done == false) {
-                data = fileHandle!.readData(ofLength: 4096)
+            // skip this if the file is empty
+            if (eof > 0) {
+                var data = Data.init(capacity: 4096)
                 
-                if (data.count <= 0) {
-                    done = true
-                } else {
-                    //let buffer = String(data: data, encoding: .utf8)
+                // my loop vars
+                var done = false
+                var lines = 0
+                var pos = 0
+                var eol = false
+                self.offsets.append(pos)   // always the first line
+                lines += 1
+                
+                // make sure we are at the beginning of the file
+                self.fileHandle?.seek(toFileOffset: UInt64(0))
+                
+                while (done == false) {
+                    data = fileHandle!.readData(ofLength: 4096)
                     
-                    //print("data (\(data.count)) = \(buffer ?? "?")")
-                    while(data.count > 0) {
-                        let char = data.first
+                    if (data.count <= 0) {
+                        done = true
+                    } else {
+                        //let buffer = String(data: data, encoding: .utf8)
                         
-                        if (char == 0x0A || char == 0x0D) {
-                            eol = true
-                        } else {            // non eol char
-                            if (eol) {      // this is what we're looking for - beginning of a line
-                                eol = false
-                                self.offsets.append(pos)
-                                lines += 1
+                        //print("data (\(data.count)) = \(buffer ?? "?")")
+                        while(data.count > 0) {
+                            let char = data.first
+                            
+                            if (char == 0x0A || char == 0x0D) {
+                                eol = true
+                            } else {            // non eol char
+                                if (eol) {      // this is what we're looking for - beginning of a line
+                                    eol = false
+                                    self.offsets.append(pos)
+                                    lines += 1
+                                }
                             }
+                            
+                            // get the next char
+                            data.removeFirst()
+                            pos += 1
                         }
-                        
-                        // get the next char
-                        data.removeFirst()
-                        pos += 1
-                    }
-                }   // else
-            }   // while done == false
-            
-            //print("\(me).loadOffsets: file = \(self.fileName + self.fileType), lines = \(lines), pos = \(pos)")
-            
-            //for i in 0 ... self.offsets.count - 1 {
-            //    print("row \(i) = offset \(self.offsets[i])")
-            //}
-            
-            self.lineCount = lines
-            self.fileLength = pos   // needed for length of last line
+                    }   // else
+                }   // while done == false
+                
+                self.lineCount = lines
+                self.fileLength = pos   // needed for length of last line
+            }
         }   // else
     }
     
@@ -186,7 +254,13 @@ public class CSVFile {
         var length = 0
         var line: String? = nil
         
+        // sanity check
         if (self.fileHandle == nil) {
+            return nil
+        }
+        
+        // see if the file is empty
+        if (self.fileLength == 0 || self.offsets.count == 0) {
             return nil
         }
         
@@ -204,14 +278,21 @@ public class CSVFile {
             }
             
             if (length > 0) {
-                self.fileHandle?.seek(toFileOffset: UInt64(offset)) // seek to previously read file offset
-            
-                let data = self.fileHandle?.readData(ofLength: length)
+                self.fileHandle!.seek(toFileOffset: UInt64(offset)) // seek to previously read file offset
                 
-                if (data == nil) {
+                let pos = Int(self.fileHandle!.offsetInFile)
+                
+                if (pos != offset) {
+                    print("\(me).readLine(\(lineNum) Failed! - offset = \(offset), actual = \(pos)")
+                    return nil
+                }
+                
+                let data = self.fileHandle!.readData(ofLength: length)
+                
+                if (data.count == 0) {
                     print("\(me).readLine(\(lineNum)) Failed! - offset = \(offset), length = \(length)")
                 } else {
-                    line = String(data: data!, encoding: .ascii)
+                    line = String(data: data, encoding: .ascii)
                     if (line == nil) {
                         print("\(me).readLine(\(lineNum)) - Failed to convert to ascii")
                     } else {
@@ -289,6 +370,8 @@ public class CSVFile {
     
     // get the requested item from the requested line
     public func getItem(lineNum: Int, itemNum: Int) -> String {
+        //print("\(me).getItem(\(lineNum),\(itemNum))")
+        
         var item = ""
         
         // sanity check
@@ -312,7 +395,74 @@ public class CSVFile {
                 item = self.currentLineItems[itemNum]
             }
         }
+        //print("\(me).getItem(\(lineNum),\(itemNum)) = \(item)")
         
         return item
+    }
+    
+    // append the passed line to the end of the file and update internal offset vars
+    public func append(_ line: String) {
+        var pos = -1
+        var buffer = line
+        
+        if (self.fileHandle == nil) {
+            print("\(me).append - file is not open!")
+        } else {
+            // close and reopen the file if it's only opened for reading
+            if (self.openedForWriting == false) {
+                self.fileHandle!.closeFile()
+                self.fileHandle = nil
+                
+                _ = self.open(openForWriting: true)
+            }
+            
+            if (self.fileHandle != nil && self.openedForWriting) {
+                // make sure each line is terminated with a newline
+                if (buffer.characters.last != "\n") {
+                    buffer.append("\n")
+                }
+                
+                // position the file pointer to the end of the file
+                pos = Int(self.fileHandle!.seekToEndOfFile())
+                
+                // save the offset of the new last line
+                self.offsets.append(pos)
+                
+                // docs say an exception could occur but try/catch says there is nothing throwable
+                self.fileHandle!.write(buffer.data(using: .ascii, allowLossyConversion: true)!)
+                
+                // update the EOF pointer
+                self.fileLength = Int(self.fileHandle!.seekToEndOfFile())
+                
+                // increment the line count
+                self.lineCount += 1
+                
+                // parse the current line and update the item count (number of columns...)
+                self.currentLineNum = self.offsets.count - 1
+                self.currentLineItems = self.parseLine(line)
+                
+                self.fileHandle!.synchronizeFile()  // flush buffers to file
+            }
+        }
+    }
+    
+    private func delete(_ url: URL?) {
+        if (url != nil) {
+            if (FileManager.default.fileExists(atPath: url!.path)) {
+                do {
+                    try FileManager.default.removeItem(at: url!);
+                    
+                    //print("File \(url!.path) deleted.");
+                } catch {
+                    print("\(me).delete - Failed to delete \(url!.path) , Error: " + error.localizedDescription);
+                }
+            }
+        }
+    }
+    
+    public func delete() {
+        self.delete(self.fileURL);
+        
+        self.initVars()
     }
 }
