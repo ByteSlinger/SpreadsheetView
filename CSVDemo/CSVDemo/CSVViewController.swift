@@ -38,7 +38,7 @@ class CSVViewController: UIViewController, SpreadsheetViewDataSource {
         }
     }
     
-    // SpreadsheetViewDelegate methods
+    // SpreadsheetViewDataSource methods
     func numRows() -> Int {
         if (self.csvFile == nil) {
             return 0
