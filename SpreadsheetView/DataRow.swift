@@ -59,7 +59,16 @@ class DataRow: UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
     
     // scroll the CollectionView to the passed item (column)
     func scrollToCell(_ item: Int) {
-        let indexPath = IndexPath(item: item, section: 0)
+        var dataCol = item
+        
+        // sanity check
+        if (item < 0) {
+            dataCol = 0
+        } else if (item >= self.spreadsheetView.numDataCols()) {
+            dataCol = self.spreadsheetView.numDataCols() - 1
+        }
+        
+        let indexPath = IndexPath(item: dataCol, section: 0)
         
         self.scrollToItem(at: indexPath, at: .right, animated: false)
     }
