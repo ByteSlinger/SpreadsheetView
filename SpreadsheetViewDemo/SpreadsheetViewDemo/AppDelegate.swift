@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  SpreadsheetViewDemo
 //
-//  Created by ByteSlinger on 8/22/17.
+//  Created by Michael S. Hearn on 10/20/17.
 //  Copyright © 2017 ByteSlinger. All rights reserved.
 //
 

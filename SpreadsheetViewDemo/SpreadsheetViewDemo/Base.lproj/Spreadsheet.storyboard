@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pwz-PT-7EU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pwz-PT-7EU">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -119,7 +118,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rows" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDZ-E9-pVI">
-                                                            <rect key="frame" x="0.0" y="4" width="120" height="22"/>
+                                                            <rect key="frame" x="37" y="4" width="46.5" height="22"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -129,8 +128,6 @@
                                                     </subviews>
                                                 </view>
                                                 <constraints>
-                                                    <constraint firstItem="cDZ-E9-pVI" firstAttribute="leading" secondItem="BSW-ao-1An" secondAttribute="leading" id="6Qw-fn-K0v"/>
-                                                    <constraint firstAttribute="trailing" secondItem="cDZ-E9-pVI" secondAttribute="trailing" id="UNg-S7-HhC"/>
                                                     <constraint firstItem="cDZ-E9-pVI" firstAttribute="centerX" secondItem="BSW-ao-1An" secondAttribute="centerX" id="WQE-89-bUP"/>
                                                     <constraint firstItem="cDZ-E9-pVI" firstAttribute="centerY" secondItem="BSW-ao-1An" secondAttribute="centerY" id="aus-El-xrj"/>
                                                 </constraints>
@@ -156,7 +153,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Hg-4L-rql" customClass="DataRow" customModule="SpreadsheetView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="168" height="29.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="192" height="29.5"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="LZb-k4-YY3">
                                                                 <size key="itemSize" width="84" height="30"/>
