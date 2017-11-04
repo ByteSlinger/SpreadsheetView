@@ -16,3 +16,5 @@ Included in the repo are 2 apps to demonstrate how to use the SpreadsheetView fr
 
 -----
 ByteSlinger
+
+![spreadsheetviewdemo](https://user-images.githubusercontent.com/2251646/32409648-dfad554c-c16c-11e7-80fa-f763b4663cc0.png)
