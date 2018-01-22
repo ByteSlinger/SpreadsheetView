@@ -54,9 +54,9 @@ let SPREADSHEETVIEW_DEFAULT_LABEL_FONT_SIZE: CGFloat = 18.0
 
 // the dataSource returns the row/col data to fill the SpreadsheetView
 public protocol SpreadsheetViewDataSource {
-    func numRows() -> Int;
-    func numCols() -> Int;
-    func getData(row: Int, col: Int) -> String;
+    func numRows() -> Int
+    func numCols() -> Int
+    func getData(row: Int, col: Int) -> String
 }
 
 public class SpreadsheetView: UIView {
