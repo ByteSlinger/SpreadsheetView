@@ -316,8 +316,9 @@ public class CSVFile {
         var quoteCount = 0
         var char: Character? = nil
         
-        while(line.characters.count > 0) {
-            char = line.characters.popFirst()
+        while(line.count > 0) {
+            //char = line.popFirst()    - deprecated
+            char = line.removeFirst()
             
             if (char != nil) {                  // should not happen, but check anyway
                 if (char == "\"") {
@@ -418,7 +419,7 @@ public class CSVFile {
             
             if (self.fileHandle != nil && self.openedForWriting) {
                 // make sure each line is terminated with a newline
-                if (buffer.characters.last != "\n") {
+                if (buffer.last != "\n") {
                     buffer.append("\n")
                 }
                 
