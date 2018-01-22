@@ -19,7 +19,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // despite the Info.plist settings, this is required to get upside down orientation to work
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all;
+        return .all
     }
     
     var fileName: String? = nil
@@ -42,19 +42,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     // make sure there are the same number of items in each array
-    var pickerDataSource = ["Cities", "GPS Data", "Female Oscars", "Male Oscars", "MLB Players",  "People", "Stationary", "Row/Col Sample"];
-    var fileNames = ["cities", "gps", "oscar_age_female", "oscar_age_male", "mlb_players", "people", "stationary", "sample"];
+    var pickerDataSource = ["Cities", "GPS Data", "Female Oscars", "Male Oscars", "MLB Players",  "People", "Stationary", "Row/Col Sample"]
+    var fileNames = ["cities", "gps", "oscar_age_female", "oscar_age_male", "mlb_players", "people", "stationary", "sample"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
-        self.pickerView.dataSource = self;
-        self.pickerView.delegate = self;
+        self.pickerView.dataSource = self
+        self.pickerView.delegate = self
         
         self.maxColumnWidthValue.text = String(Int(self.maxColumnWidthSlider.value))
         
-        viewButton.layer.cornerRadius = viewButton.frame.size.width / 4;
+        viewButton.layer.cornerRadius = viewButton.frame.size.width / 4
     }
 
     // UIPickerViewDataSource methods
@@ -63,7 +63,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerDataSource.count;
+        return pickerDataSource.count
     }
 
     // UIPickerViewDataDelegate methods

@@ -22,7 +22,7 @@ class CSVViewController: UIViewController, SpreadsheetViewDataSource {
     
     // despite the Info.plist settings, this is required to get upside down orientation to work
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all;
+        return .all
     }
     
     override func viewDidLoad() {

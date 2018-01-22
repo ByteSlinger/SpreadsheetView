@@ -450,18 +450,18 @@ public class CSVFile {
         if (url != nil) {
             if (FileManager.default.fileExists(atPath: url!.path)) {
                 do {
-                    try FileManager.default.removeItem(at: url!);
+                    try FileManager.default.removeItem(at: url!)
                     
-                    //print("File \(url!.path) deleted.");
+                    //print("File \(url!.path) deleted.")
                 } catch {
-                    print("\(me).delete - Failed to delete \(url!.path) , Error: " + error.localizedDescription);
+                    print("\(me).delete - Failed to delete \(url!.path) , Error: " + error.localizedDescription)
                 }
             }
         }
     }
     
     public func delete() {
-        self.delete(self.fileURL);
+        self.delete(self.fileURL)
         
         self.initVars()
     }
