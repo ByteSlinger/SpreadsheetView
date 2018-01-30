@@ -11,8 +11,8 @@ There are also 2 UICollectionView objects used for the horizontal row of column 
 
 Included in the repo are 2 apps to demonstrate how to use the SpreadsheetView framework:
 
-  * SpreadsheetViewDemo app - randomly generated data.
-  * CSVDemo app - several sample CSV files
+  * [SpreadsheetViewDemo app](./SpreadsheetViewDemo) - randomly generated data.
+  * [CSVDemo app](./CSVDemo) - several sample CSV files
 
 -----
 ByteSlinger
